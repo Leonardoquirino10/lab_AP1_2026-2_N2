@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Assinante que agrega episódios.
- * Complete os métodos marcados com //TODO.
+ * Complete os métodos marcados com //TODO (Tarefas 1, 2 e 3).
  */
 public class Assinante {
     public static final double TARIFA_BASE = 29.90;
@@ -38,17 +38,33 @@ public class Assinante {
      * Marca como assistido o primeiro episódio com o título que ainda não foi assistido.
      */
     public boolean registrarAssistido(String titulo) {
-        //TODO
+        if (titulo == null) {
+            return false;
+        }
+        for (Episodio e : episodios) {
+            if (titulo.equals(e.getTitulo()) && !e.estaAssistido()) {
+                e.marcarAssistido();
+                return true;
+            }
+        }
         return false;
     }
 
     public int tempoTotalAssistido() {
-        //TODO
-        return 0;
+        int soma = 0;
+        for (Episodio e : episodios) {
+            if (e.estaAssistido()) {
+                soma += e.getMinutos();
+            }
+        }
+        return soma;
     }
 
+    /**
+     * Soma das durações dos episódios ainda não assistidos.
+     */
     public int creditoDeTempo() {
-        //TODO
+        //TODO Tarefa 1
         return 0;
     }
 
@@ -56,7 +72,7 @@ public class Assinante {
      * Iniciante / Regular / Engajado / Binge (lista vazia → Iniciante).
      */
     public String classificacaoEngajamento() {
-        //TODO
+        //TODO Tarefa 2
         return "Iniciante";
     }
 
@@ -64,12 +80,16 @@ public class Assinante {
      * Base 29,90; +10% se Binge; 0 se tempo assistido &gt; 600.
      */
     public double tarifaMensal() {
-        //TODO
+        //TODO Tarefa 3
         return 0.0;
     }
 
     public String resumo() {
-        //TODO
-        return "";
+        return nome
+                + " | eps=" + quantidadeEpisodios()
+                + " | assistido=" + tempoTotalAssistido() + "min"
+                + " | credito=" + creditoDeTempo() + "min"
+                + " | " + classificacaoEngajamento()
+                + " | tarifa=" + String.format("%.2f", tarifaMensal());
     }
 }
