@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Assinante que agrega episódios.
- * Complete os métodos marcados com //TODO (Tarefas 1, 2 e 3).
+ * Complete os métodos marcados com //TODO (Tarefas 2 e 3).
  */
 public class Assinante {
     public static final double TARIFA_BASE = 29.90;
@@ -60,24 +60,29 @@ public class Assinante {
         return soma;
     }
 
-    /**
-     * Soma das durações dos episódios ainda não assistidos.
-     */
     public int creditoDeTempo() {
-        //TODO Tarefa 1
-        return 0;
+        int soma = 0;
+        for (Episodio e : episodios) {
+            if (!e.estaAssistido()) {
+                soma += e.getMinutos();
+            }
+        }
+        return soma;
     }
 
     /**
-     * Iniciante / Regular / Engajado / Binge (lista vazia → Iniciante).
+     * Pela proporção de episódios assistidos sobre o total:
+     * até 10% INICIANTE; até 50% REGULAR; até 75% ENGAJADO; acima BINGE.
+     * Lista vazia → INICIANTE.
      */
-    public String classificacaoEngajamento() {
+    public Engajamento classificacaoEngajamento() {
         //TODO Tarefa 2
-        return "Iniciante";
+        return Engajamento.INICIANTE;
     }
 
     /**
-     * Base 29,90; +10% se Binge; 0 se tempo assistido &gt; 600.
+     * 0 se tempo assistido &gt; 600 minutos;
+     * caso contrário, TARIFA_BASE multiplicada pelo fator da classificação.
      */
     public double tarifaMensal() {
         //TODO Tarefa 3
