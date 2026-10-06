@@ -50,12 +50,56 @@ public class AssinanteTest {
 
     @Test
     void deveClassificarEngajamento() {
+        Assinante a = new Assinante ( "Teste");
+        a.adicionar(new Episodio("EP1", 1, 100));
+        a.adicionar(new Episodio("EP2", 1, 100));
+        a.adicionar(new Episodio("EP3", 1, 100));
+        a.adicionar(new Episodio("EP4", 1, 100));
+
+        a.registrarAssistido("EP1");
+        a.registrarAssistido("EP2");
+
+        assertEquals(Engajamento.REGULAR, a.classificacaoEngajamento());
+
+        a.registrarAssistido("EP3");
+        a.registrarAssistido("EP4");
+
+        assertEquals(Engajamento.BINGE, a.classificacaoEngajamento());
+
         //TODO Tarefa 4: testar classificacaoEngajamento em pelo menos dois cenários
         // (ex.: 4 episódios com 2 assistidos → REGULAR; 4 com 4 assistidos → BINGE)
     }
 
     @Test
     void deveCalcularTarifaMensal() {
+        Assinante a = new Assinante ( "Teste");
+        a.adicionar(new Episodio("EP1", 1, 100));
+        a.adicionar(new Episodio("EP2", 1, 100));
+        a.adicionar(new Episodio("EP3", 1, 100));
+        a.adicionar(new Episodio("EP4", 1, 100));
+
+        a.registrarAssistido("EP1");
+        a.registrarAssistido("EP2");
+        a.registrarAssistido("EP3");
+        a.registrarAssistido("EP4");
+
+        assertEquals(29.90 * 1.10, a.tarifaMensal(), 0.001);
+
+        Assinante isento = new Assinante("Isento");
+
+        isento.adicionar(new Episodio("EP1", 1, 200));
+        isento.adicionar(new Episodio("EP2", 1, 200));
+        isento.adicionar(new Episodio("EP3", 1, 200)); 
+        isento.adicionar(new Episodio("EP4", 1, 200));  
+
+        a.registrarAssistido("EP1");
+        a.registrarAssistido("EP2");
+        a.registrarAssistido("EP3");
+        a.registrarAssistido("EP4");
+
+        assertEquals(0.0, isento.tarifaMensal(), 0.001);
+
+        
         //TODO Tarefa 5: testar tarifaMensal usando o fator da classificação
         // (ex.: BINGE sem isenção → 29,90 × 1,10) e a isenção acima de 600 minutos
     }
